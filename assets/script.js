@@ -12,7 +12,7 @@ var questions = [
     {
         question: "How does a FOR loop start?",
         choices: ["A. for (i = 0; i <= 5; i++)", "B. for i = 1 to 5", "C. for (i <= 5; i++)", "D. for (i = 0; i <= 5)"],
-        answer: "A. for (i = 0; i <= 5; i++)",
+        answer: buttonA,
     },{
         question: "Commonly used data types DO NOT include:",
         choices: ["A. strings", "B. booleans", "C. alerts", "D. numbers"],
@@ -47,16 +47,15 @@ var buttonB = document.querySelector(".buttonB");
 var buttonC = document.querySelector(".buttonC");
 var buttonD = document.querySelector(".buttonD");
 var questionNumber = 0;
-var answers = document.querySelector(".answers")
-var score = 0
-var scoreboard = document.querySelector(".scoreboard")
+var answers = document.querySelector(".answers");
+var score = 0;
+var scoreboard = document.querySelector(".scoreboard");
 
 
-
-// Starts the game when user clicks start button
+// Activates start button
 startButton.addEventListener("click", startGame);
 
-// 
+// Activates quit button
 quitButton.addEventListener("click", quitGame);
 
 // Sets everything in motion and hides welcome text
@@ -78,26 +77,43 @@ function createQuestions() {
         buttonC.innerHTML = currentQuestion.choices[2];
         buttonD.innerHTML = currentQuestion.choices[3];
     }
+    console.log(questions[questionNumber].answer);
+
 };
 
-function checkAnswer(){
-    if (questionNumber < questions.length) {
-        var currentQuestion = questions[questionNumber];
-        
-    }
-
-}
-
+// Clicking answer buttons will trigger checkAnswer function
 buttonA.addEventListener("click", checkAnswer);
+buttonA.addEventListener("click", function(event){
+    userAnswer = event.target;
+    if (userAnswer === questions[0].answer) {
+        score++
+    }
+})
+
+
 buttonB.addEventListener("click", checkAnswer);
 buttonC.addEventListener("click", checkAnswer);
 buttonD.addEventListener("click", checkAnswer);
 
-console.log(answers[0]);
+
+// 
+function checkAnswer() {
+    if (questionNumber < questions.length) {
+        questionNumber++;
+        createQuestions();
+    }
+    if (questionNumber === questions.length){
+        showScoreboard();}
+
+    
+}
 
 
+function showScoreboard() {
+    console.log("scoreboard")
+    console.log(score);
 
-
+}
 
 
 // Text appears when user loses game by running out of time
@@ -114,7 +130,7 @@ function quitGame() {
 
 // Controls the timer
 function startTimer() {
-    var timeLeft = 10;
+    var timeLeft = 80;
     var timeInterval = setInterval(function(){
         if (timeLeft > 1) {
             timerEl.textContent = timeLeft + " seconds remaining";
