@@ -4,6 +4,7 @@
 // https://codepen.io/boopalan002/pen/yKZVGa
 // https://www.w3schools.com/js/js_quiz.asp
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
+// https://www.sitepoint.com/simple-javascript-quiz/
 
 
 
@@ -47,6 +48,8 @@ var buttonC = document.querySelector(".buttonC");
 var buttonD = document.querySelector(".buttonD");
 var questionNumber = 0;
 var answers = document.querySelector(".answers")
+var score = 0
+var scoreboard = document.querySelector(".scoreboard")
 
 
 
@@ -61,23 +64,39 @@ function startGame(){
     startTimer();
     document.getElementsByClassName("welcome")[0].style.visibility="hidden";
     questionNumber = 0;
-    createQuestions(questionNumber);
-}
+    createQuestions();
+};
 
 
-// Creates questions and answers by pulling from arrays
-function createQuestions(questionNumber) {
+// Creates questions and choices by pulling from arrays
+function createQuestions() {
     if (questionNumber < questions.length) {
-        questionEl.textContent = questions[questionNumber].question;
-        buttonA.textContent = questions[questionNumber].choices[0];
-        buttonB.textContent = questions[questionNumber].choices[1];
-        buttonC.textContent = questions[questionNumber].choices[2];
-        buttonD.textContent = questions[questionNumber].choices[3];
+        var currentQuestion = questions[questionNumber];
+        questionEl.textContent = currentQuestion.question;
+        buttonA.innerHTML = currentQuestion.choices[0];
+        buttonB.innerHTML = currentQuestion.choices[1];
+        buttonC.innerHTML = currentQuestion.choices[2];
+        buttonD.innerHTML = currentQuestion.choices[3];
+    }
+};
+
+function checkAnswer(){
+    if (questionNumber < questions.length) {
+        var currentQuestion = questions[questionNumber];
+        
     }
 
-
-
 }
+
+buttonA.addEventListener("click", checkAnswer);
+buttonB.addEventListener("click", checkAnswer);
+buttonC.addEventListener("click", checkAnswer);
+buttonD.addEventListener("click", checkAnswer);
+
+console.log(answers[0]);
+
+
+
 
 
 
