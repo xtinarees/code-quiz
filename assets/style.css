@@ -1,5 +1,7 @@
 html {
     box-sizing: border-box;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+
 }
 
 *, *:before, *:after {
@@ -20,13 +22,35 @@ header {
 
 header h1 {
     padding:10px;
+    font-size: 35px;
 }
 
 header h2 {
     padding: 10px;
+    font-size: 25px;
 }
 
-header button {
+.questions h2 {
+    font-size: 25px;
+}
+
+.answers {
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-around;
+    margin-top: 15px;
+    align-items:flex-start;
+}
+
+.buttonA,
+.buttonB,
+.buttonC,
+.buttonD {
+    background-color: purple;
+    color: white;
+    padding:10px;
+    margin: 5 px;
+    border: white 2px solid;
 }
 
 .container {
