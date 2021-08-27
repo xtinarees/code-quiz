@@ -4,7 +4,6 @@
 // https://codepen.io/boopalan002/pen/yKZVGa
 // https://www.w3schools.com/js/js_quiz.asp
 
-
 var questions = [
     {
         question: "How does a FOR loop start?",
@@ -27,6 +26,44 @@ var questions = [
         choices: ["A. Not me", "B. Not me", "C. Not me", "D. Me"],
         answer: "D. Me",
     }
-]
+];
 
-console.log(questions);
+var welcome = document.querySelector(".welcome");
+var startButton = document.querySelector(".start-button");
+var quitButton = document.querySelector(".quit-button");
+var quiz = document.querySelector(".quiz");
+var timerEl = document.querySelector(".timer-text")
+
+
+
+
+
+startButton.addEventListener("click", startGame);
+
+
+function startGame(){
+    startTimer();
+    document.getElementsByClassName("welcome")[0].style.visibility = "hidden";
+
+
+}
+
+function loseGame() {
+
+}
+
+
+function startTimer() {
+    var timeLeft = 40;
+    var timeInterval = setInterval(function(){
+        if (timeLeft > 1) {
+            timerEl.textContent = timeLeft + " seconds remaining";
+            timeLeft--;
+        } else {
+            timerEl.textContent = "";
+            loseGame();
+            clearInterval(timeInterval);
+        }
+    }, 1000) 
+}
+

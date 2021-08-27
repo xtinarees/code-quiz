@@ -17,7 +17,7 @@ header {
     justify-content: center;
     align-content: space-around;
     align-items: center;
-    padding-top: 10%;
+    padding-top: 10px;
 }
 
 header h1 {
@@ -63,4 +63,9 @@ header h2 {
     align-content: space-around;
     align-items: center;
     padding-top: 3%;
+}
+
+.timer-text {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 40px;
 }
