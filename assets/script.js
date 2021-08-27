@@ -12,7 +12,7 @@ var questions = [
     {
         question: "How does a FOR loop start?",
         choices: ["A. for (i = 0; i <= 5; i++)", "B. for i = 1 to 5", "C. for (i <= 5; i++)", "D. for (i = 0; i <= 5)"],
-        answer: buttonA,
+        answer: "A. for (i = 0; i <= 5; i++)"
     },{
         question: "Commonly used data types DO NOT include:",
         choices: ["A. strings", "B. booleans", "C. alerts", "D. numbers"],
@@ -29,10 +29,8 @@ var questions = [
         question: "Who is the Lord of the Code?",
         choices: ["A. Not me", "B. Not me", "C. Not me", "D. Me"],
         answer: "D. Me",
-    }
+    },
 ];
-
-console.log(questions[0].question);
 
 
 var welcome = document.querySelector(".welcome");
@@ -77,38 +75,54 @@ function createQuestions() {
         buttonC.innerHTML = currentQuestion.choices[2];
         buttonD.innerHTML = currentQuestion.choices[3];
     }
-    console.log(questions[questionNumber].answer);
+// Activates nextQuestion function when user clicks an answer
+    answers.addEventListener("click", nextQuestion);
+
+// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later.
+    buttonA.addEventListener("click", function(event){
+        userAnswer = event.target.innerHTML;
+        if (userAnswer === currentQuestion.answer) {
+            score++
+        } 
+    })
+// Checks whether user answer is correct and adds to score if it is
+    buttonB.addEventListener("click", function(event){
+        userAnswer = event.target.innerHTML;
+        if (userAnswer === currentQuestion.answer) {
+            score++
+        }
+    });
+// Checks whether user answer is correct and adds to score if it is
+    buttonC.addEventListener("click", function(event){
+        userAnswer = event.target.innerHTML;
+        if (userAnswer === currentQuestion.answer) {
+            score++
+        };
+    })
+// Checks whether user answer is correct and adds to score if it is
+    buttonD.addEventListener("click", function(event){
+        userAnswer = event.target.innerHTML;
+        if (userAnswer === currentQuestion.answer) {
+            score++
+    } ;
+
+});
+
 
 };
 
-// Clicking answer buttons will trigger checkAnswer function
-buttonA.addEventListener("click", checkAnswer);
-buttonA.addEventListener("click", function(event){
-    userAnswer = event.target;
-    if (userAnswer === questions[0].answer) {
-        score++
-    }
-})
 
-
-buttonB.addEventListener("click", checkAnswer);
-buttonC.addEventListener("click", checkAnswer);
-buttonD.addEventListener("click", checkAnswer);
-
-
-// 
-function checkAnswer() {
+// Triggers next question
+function nextQuestion() {
     if (questionNumber < questions.length) {
         questionNumber++;
         createQuestions();
     }
     if (questionNumber === questions.length){
         showScoreboard();}
-
-    
 }
 
-
+// Shows scoreboard
 function showScoreboard() {
     console.log("scoreboard")
     console.log(score);
