@@ -13,23 +13,22 @@
 <body>
     <header class="welcome">
         <h1>The Ultimate Code Quiz</h1>
-        <p>You will have 40 seconds to answer 5 multiple choice questions about javascript. Good luck.</p>
+        <p>You will have 40 seconds to answer 5 multiple choice questions about javascript. You will lose  time for every wrong answer. Good luck.</p>
         <h2>Do you have what it takes to become Lord of the Code?<h2>
                 <button class="start-button">Yeah! Start the Clock!</button>
                 <button class="quit-button">No! I don't have what it takes!</button>
     </header>
     <div class="container">
 
-        <div class="scoreboard"></div>
+        <div class="scoreboard">
             <p class="display-score"></p>
             <input type="text" name ="initials" class="initials" placeholder ="ADM" />
             <button class=submit-button>Submit Your Score</button>
-
-        <div class ="scoreboard-page"></div>
             <h2>High Scores</h2>
             <p>Name: <span id="display-name"></span></p>
             <p>Score: <span id="scores-display"></span></p>
-            <button class="Play again">Play again</button>
+            <button class="replay">Play again</button>
+        </div>
 
         <div class="quiz">
             <div class="questions">
@@ -40,15 +39,11 @@
                 <li><button class="buttonB" id="buttonB">B</button></li>
                 <li><button class="buttonC" id="buttonC">C</button></li>
                 <li><button class="buttonD" id="buttonD">D</button></li>
-
-
-
         </div>
+        
         <div class="card-timer">
             <div class="timer-text"></div>
 
-        <div class="scoreboard">
-            <div class="score"></div>
         </div>
 
 

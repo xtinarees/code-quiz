@@ -52,6 +52,17 @@ var scoreboard = document.querySelector(".scoreboard");
 var displayScore = document.querySelector(".display-score");
 var initials = document.querySelector(".initials");
 var submitButton = document.querySelector(".submit-button");
+var timeLeft = 40;
+var scoreboardPage = document.querySelector(".scoreboard-page");
+var replayButton = document.querySelector(".replay");
+
+init()
+
+function init(){
+    quiz.style.display="none";
+    scoreboard.style.display="none";
+    welcome.display="block";
+}
 
 
 // Activates start button
@@ -63,7 +74,8 @@ quitButton.addEventListener("click", quitGame);
 // Sets everything in motion and hides welcome text
 function startGame(){
     startTimer();
-    welcome.style.visibility="hidden";
+    welcome.style.display="none";
+    quiz.style.display="block";
     questionNumber = 0;
     createQuestions();
 };
@@ -81,19 +93,23 @@ function createQuestions() {
     }
 // Activates nextQuestion function when user clicks an answer
     answers.addEventListener("click", nextQuestion);
-
-// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later.
+console.log(currentQuestion.answer)
+// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later if I have time.
     buttonA.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-        } 
+        } else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--
+        }
     })
 // Checks whether user answer is correct and adds to score if it is
     buttonB.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
+        } else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--
         }
     });
 // Checks whether user answer is correct and adds to score if it is
@@ -101,15 +117,20 @@ function createQuestions() {
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-        };
+        } else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--
+        }
     })
 // Checks whether user answer is correct and adds to score if it is
     buttonD.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-    } ;
+    } else if (userAnswer !== currentQuestion.answer) {
+        timeLeft--
+    }
 });
+
 };
 
 
@@ -119,7 +140,7 @@ function nextQuestion() {
         questionNumber++;
         createQuestions();
     }
-    if (questionNumber === questions.length){
+    if (questionNumber === questions.length) {
         showScoreboard();}
 }
 
@@ -127,9 +148,10 @@ function nextQuestion() {
 function showScoreboard() {
     console.log("scoreboard")
     console.log(score);
-    quiz.style.visibility = "hidden";
-    timerEl.style.visibility = "hidden";
-    scoreboard.textContent="Your score: " + score + " questions correct";
+    quiz.style.display = "none";
+    timerEl.style.display = "none";
+    scoreboard.style.display="block";
+    displayScore.textContent="Your score: " + score + " questions correct";
 }
 
 
@@ -160,11 +182,18 @@ submitButton.addEventListener("click", function(event) {
     displayScores();
 });
 
-// Clicking replay button does bla bla bla
-
-
-
-
+// Clicking replay button resets initial conditions.
+function replayQuiz(){
+    quiz.style.display="block";
+    scoreboard.style.display="none";
+    timerEl.style.display="block";
+    timeLeft=40;
+    questionNumber=0;
+    score=0;
+    startGame();
+}
+// Clicking replay button actives replayQuiz function
+replayButton.addEventListener("click", replayQuiz)
 
 // Text appears when user loses game by running out of time
 function loseGame() {
@@ -180,7 +209,6 @@ function quitGame() {
 
 // Controls the timer
 function startTimer() {
-    var timeLeft = 80;
     var timeInterval = setInterval(function(){
         if (timeLeft > 1) {
             timerEl.textContent = timeLeft + " seconds remaining";
