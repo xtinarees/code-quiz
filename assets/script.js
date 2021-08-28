@@ -5,6 +5,7 @@
 // https://www.w3schools.com/js/js_quiz.asp
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
 // https://www.sitepoint.com/simple-javascript-quiz/
+// https://michael-karen.medium.com/how-to-save-high-scores-in-local-storage-7860baca9d68
 
 
 
@@ -48,6 +49,9 @@ var questionNumber = 0;
 var answers = document.querySelector(".answers");
 var score = 0;
 var scoreboard = document.querySelector(".scoreboard");
+var displayScore = document.querySelector(".display-score");
+var initials = document.querySelector(".initials");
+var submitButton = document.querySelector(".submit-button");
 
 
 // Activates start button
@@ -59,7 +63,7 @@ quitButton.addEventListener("click", quitGame);
 // Sets everything in motion and hides welcome text
 function startGame(){
     startTimer();
-    document.getElementsByClassName("welcome")[0].style.visibility="hidden";
+    welcome.style.visibility="hidden";
     questionNumber = 0;
     createQuestions();
 };
@@ -67,8 +71,8 @@ function startGame(){
 
 // Creates questions and choices by pulling from arrays
 function createQuestions() {
+    var currentQuestion = questions[questionNumber];
     if (questionNumber < questions.length) {
-        var currentQuestion = questions[questionNumber];
         questionEl.textContent = currentQuestion.question;
         buttonA.innerHTML = currentQuestion.choices[0];
         buttonB.innerHTML = currentQuestion.choices[1];
@@ -105,10 +109,7 @@ function createQuestions() {
         if (userAnswer === currentQuestion.answer) {
             score++
     } ;
-
 });
-
-
 };
 
 
@@ -122,12 +123,47 @@ function nextQuestion() {
         showScoreboard();}
 }
 
-// Shows scoreboard
+// Shows scoreboard, hides everything else
 function showScoreboard() {
     console.log("scoreboard")
     console.log(score);
-
+    quiz.style.visibility = "hidden";
+    timerEl.style.visibility = "hidden";
+    scoreboard.textContent="Your score: " + score + " questions correct";
 }
+
+
+
+// Puts initials and score in local storage
+function saveScore (){
+    var name = initials.value;
+    var newScore = {name, score};
+    localStorage.setItem("newScore", JSON.stringify(newScore));
+    console.log(saveScore)
+}
+
+// Pulls initials and score from local storage and displays them on screen
+function displayScores() {
+    var showScores = JSON.parse(localStorage.getItem("newScore"));
+    if (showScores !== null) {
+        document.getElementById("display-name").innerHTML = showScores.name;
+        document.getElementById("scores-display").innerHTML = showScores.score;
+    } else {
+        return;
+    }
+}
+
+// Clicking submit button stores score and pulls previous score(s)
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    saveScore();
+    displayScores();
+});
+
+// Clicking replay button does bla bla bla
+
+
+
 
 
 // Text appears when user loses game by running out of time
@@ -156,4 +192,3 @@ function startTimer() {
         }
     }, 1000) 
 }
-
