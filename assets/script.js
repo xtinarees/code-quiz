@@ -6,6 +6,8 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators
 // https://www.sitepoint.com/simple-javascript-quiz/
 // https://michael-karen.medium.com/how-to-save-high-scores-in-local-storage-7860baca9d68
+// https://www.w3schools.com/jsref/prop_style_display.asp
+// https://stackoverflow.com/questions/60370557/how-can-you-deduct-10-seconds-from-a-running-timer-in-javascript
 
 
 
@@ -92,46 +94,47 @@ function createQuestions() {
         buttonD.innerHTML = currentQuestion.choices[3];
     }
 // Activates nextQuestion function when user clicks an answer
-    answers.addEventListener("click", nextQuestion);
+
 console.log(currentQuestion.answer)
-// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later if I have time.
+// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later. If I create a "buttons" class and add it to all four buttons, will the event listener be able to target which specific button the user is clicking on?
     buttonA.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-        } else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--
         }
+        else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--}
     })
 // Checks whether user answer is correct and adds to score if it is
     buttonB.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-        } else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--
-        }
+        } 
+        else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--}
     });
 // Checks whether user answer is correct and adds to score if it is
     buttonC.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-        } else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--
         }
+        else if (userAnswer !== currentQuestion.answer) {
+            timeLeft--}
     })
 // Checks whether user answer is correct and adds to score if it is
     buttonD.addEventListener("click", function(event){
         userAnswer = event.target.innerHTML;
         if (userAnswer === currentQuestion.answer) {
             score++
-    } else if (userAnswer !== currentQuestion.answer) {
-        timeLeft--
     }
+    else if (userAnswer !== currentQuestion.answer) {
+        timeLeft--}
 });
-
 };
+
+answers.addEventListener("click", nextQuestion);;
 
 
 // Triggers next question
@@ -139,7 +142,7 @@ function nextQuestion() {
     if (questionNumber < questions.length) {
         questionNumber++;
         createQuestions();
-    }
+    } // Should send user to scoreboard after clicking answer on final question. For some reason it's taking 2 clicks. Need to figure it out.
     if (questionNumber === questions.length) {
         showScoreboard();}
 }
@@ -182,7 +185,7 @@ submitButton.addEventListener("click", function(event) {
     displayScores();
 });
 
-// Clicking replay button resets initial conditions.
+// Clicking replay button resets initial conditions of quiz.
 function replayQuiz(){
     quiz.style.display="block";
     scoreboard.style.display="none";
@@ -195,17 +198,15 @@ function replayQuiz(){
 // Clicking replay button actives replayQuiz function
 replayButton.addEventListener("click", replayQuiz)
 
-// Text appears when user loses game by running out of time
+// Text appears when user loses game by running out of time during quiz
 function loseGame() {
     quiz.textContent = "You ran out of time! You really don't have what it takes to be The Lord of the Code. Refresh the page and try again, but be quick this time."
 }
 
-// Text appears when user clicks quit button
+// Text appears when user clicks quit button at start
 function quitGame() {
     welcome.textContent = "What? You're not even gonna try? Come on. Refresh the page and try."
 }
-
-
 
 // Controls the timer
 function startTimer() {
