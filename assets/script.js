@@ -15,23 +15,23 @@ var questions = [
     {
         question: "How does a FOR loop start?",
         choices: ["A. for (i = 0; i <= 5; i++)", "B. for i = 1 to 5", "C. for (i <= 5; i++)", "D. for (i = 0; i <= 5)"],
-        answer: "A. for (i = 0; i <= 5; i++)"
+        answer: 0,
     },{
         question: "Commonly used data types DO NOT include:",
         choices: ["A. strings", "B. booleans", "C. alerts", "D. numbers"],
-        answer: "C. alerts",
+        answer: 2,
     },{
         question: "Which of the following function of Array object returns a string representing the array and its elements?",
         choices: ["A. toSource()", "B. sort()", "C. splice()", "D.toString()"],
-        answer: "D.toString()",
+        answer: 3,
     },{
         question: "What does DOM stand for?",
         choices: ["A. Document Object Model", "B. Dogs Owls Moths", "C. Do Over Meat", "D. Dig Out Man"],
-        answer: "A. Document Object Model",
+        answer: 0,
     },{
         question: "Who is the Lord of the Code?",
         choices: ["A. Not me", "B. Not me", "C. Not me", "D. Me"],
-        answer: "D. Me",
+        answer: 3,
     },
 ];
 
@@ -57,6 +57,8 @@ var submitButton = document.querySelector(".submit-button");
 var timeLeft = 40;
 var scoreboardPage = document.querySelector(".scoreboard-page");
 var replayButton = document.querySelector(".replay");
+var currentQuestion;
+var timeInterval;
 
 init()
 
@@ -82,10 +84,26 @@ function startGame(){
     createQuestions();
 };
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+function getIndexFromId(id) {
+    var ids = ["buttonA", "buttonB", "buttonC", "buttonD"];
+    return ids.indexOf(id);
+}
+
+function checkAnswer(event) {
+    var userAnswer = getIndexFromId(event.target.id);
+    if (userAnswer === currentQuestion.answer) {
+        score++
+    } else {
+        timeLeft = timeLeft - 10;
+    }
+}
+
 
 // Creates questions and choices by pulling from arrays
 function createQuestions() {
-    var currentQuestion = questions[questionNumber];
+    currentQuestion = questions[questionNumber];
+
     if (questionNumber < questions.length) {
         questionEl.textContent = currentQuestion.question;
         buttonA.innerHTML = currentQuestion.choices[0];
@@ -93,49 +111,14 @@ function createQuestions() {
         buttonC.innerHTML = currentQuestion.choices[2];
         buttonD.innerHTML = currentQuestion.choices[3];
     }
-// Activates nextQuestion function when user clicks an answer
 
-console.log(currentQuestion.answer)
-// Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later. If I create a "buttons" class and add it to all four buttons, will the event listener be able to target which specific button the user is clicking on?
-    buttonA.addEventListener("click", function(event){
-        userAnswer = event.target.innerHTML;
-        if (userAnswer === currentQuestion.answer) {
-            score++
-        }
-        else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--}
-    })
-// Checks whether user answer is correct and adds to score if it is
-    buttonB.addEventListener("click", function(event){
-        userAnswer = event.target.innerHTML;
-        if (userAnswer === currentQuestion.answer) {
-            score++
-        } 
-        else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--}
-    });
-// Checks whether user answer is correct and adds to score if it is
-    buttonC.addEventListener("click", function(event){
-        userAnswer = event.target.innerHTML;
-        if (userAnswer === currentQuestion.answer) {
-            score++
-        }
-        else if (userAnswer !== currentQuestion.answer) {
-            timeLeft--}
-    })
-// Checks whether user answer is correct and adds to score if it is
-    buttonD.addEventListener("click", function(event){
-        userAnswer = event.target.innerHTML;
-        if (userAnswer === currentQuestion.answer) {
-            score++
-    }
-    else if (userAnswer !== currentQuestion.answer) {
-        timeLeft--}
-});
-};
-
-answers.addEventListener("click", nextQuestion);;
-
+    // Checks whether user answer is correct and adds to score if it is. I know there is a cleaner way to write all this, I'll fix it later. If I create a "buttons" class and add it to all four buttons, will the event listener be able to target which specific button the user is clicking on?
+    buttonA.addEventListener("click", checkAnswer);
+    buttonB.addEventListener("click", checkAnswer);
+    buttonC.addEventListener("click", checkAnswer);
+    buttonD.addEventListener("click", checkAnswer);
+    answers.addEventListener("click", nextQuestion);;
+}
 
 // Triggers next question
 function nextQuestion() {
@@ -144,7 +127,9 @@ function nextQuestion() {
         createQuestions();
     } // Should send user to scoreboard after clicking answer on final question. For some reason it's taking 2 clicks. Need to figure it out.
     if (questionNumber === questions.length) {
-        showScoreboard();}
+        showScoreboard();
+        stopTimer();
+    }
 }
 
 // Shows scoreboard, hides everything else
@@ -210,14 +195,19 @@ function quitGame() {
 
 // Controls the timer
 function startTimer() {
-    var timeInterval = setInterval(function(){
+    timeInterval = setInterval(function(){
         if (timeLeft > 1) {
             timerEl.textContent = timeLeft + " seconds remaining";
             timeLeft--;
         } else {
+            console.log("did lose game fire??")
             timerEl.textContent = "";
             loseGame();
             clearInterval(timeInterval);
         }
     }, 1000) 
+}
+
+function stopTimer() {
+    clearInterval(timeInterval);
 }
